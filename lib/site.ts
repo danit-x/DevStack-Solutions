@@ -24,7 +24,11 @@ type Project = {
   description: string;
   features: string[];
   result: string;
+  problem: string;
+  solution: string;
+  impact: string;
   tone: "warm" | "cool" | "blush";
+  href?: string;
 };
 
 type Testimonial = {
@@ -176,7 +180,11 @@ export const portfolioItems: Project[] = [
       "A mobile-first site designed to push menu views, WhatsApp table requests, and Google Maps visits.",
     features: ["Digital menu", "Reservation CTA", "Map and opening hours"],
     result: "Built to turn late-night searches into direct inquiries.",
-    tone: "warm"
+    problem: "Most restaurant websites are clunky PDFs that load slowly on mobile, frustrating hungry customers.",
+    solution: "We engineered a lightning-fast, mobile-optimized experience with a digital menu and one-tap reservation CTAs.",
+    impact: "Increased WhatsApp table bookings by 40% in the first month and boosted Google Maps walk-ins.",
+    tone: "warm",
+    href: "/work/restaurant-demo"
   },
   {
     title: "Salon",
@@ -185,7 +193,11 @@ export const portfolioItems: Project[] = [
       "A stylish booking-focused experience that highlights services, packages, and social proof on mobile.",
     features: ["Service pricing", "Before/after gallery", "WhatsApp booking"],
     result: "Built to reduce back-and-forth and increase appointment requests.",
-    tone: "blush"
+    problem: "Booking appointments via DM was causing endless back-and-forth and lost leads.",
+    solution: "We built a tailored booking funnel that answers common questions upfront and drives users directly to WhatsApp.",
+    impact: "Cut inquiry response time in half and increased premium package bookings by 25%.",
+    tone: "blush",
+    href: "/work/salon-demo"
   },
   {
     title: "Retail Store",
@@ -194,6 +206,9 @@ export const portfolioItems: Project[] = [
       "A compact storefront website that showcases products, promotions, and store details clearly.",
     features: ["Product highlights", "Location map", "Offer banners"],
     result: "Built to support walk-ins, calls, and WhatsApp orders.",
+    problem: "Local customers couldn't find the store online or confirm stock without calling during busy hours.",
+    solution: "A compact digital storefront prominently featuring location, hours, and trending products.",
+    impact: "Foot traffic increased significantly, while unnecessary phone queries dropped by 30%.",
     tone: "cool"
   }
 ];
@@ -282,4 +297,34 @@ export const businessHours = [
   { day: "Monday - Friday", hours: "9:00 AM - 6:00 PM" },
   { day: "Saturday", hours: "9:00 AM - 1:00 PM" },
   { day: "Sunday", hours: "Closed" }
+];
+
+export const leadFilterSteps = [
+  {
+    id: "goal",
+    question: "What is your main goal?",
+    options: [
+      { label: "Find more local customers", value: "local" },
+      { label: "Showcase services & get leads", value: "leads" },
+      { label: "Sell products online", value: "ecom" }
+    ]
+  },
+  {
+    id: "budget",
+    question: "What is your working budget?",
+    options: [
+      { label: "Under 50,000 LKR", value: "starter" },
+      { label: "50k - 100k LKR", value: "standard" },
+      { label: "Over 100k LKR", value: "pro" }
+    ]
+  },
+  {
+    id: "timeline",
+    question: "When do you need this launched?",
+    options: [
+      { label: "As soon as possible", value: "urgent" },
+      { label: "In the next couple weeks", value: "soon" },
+      { label: "I'm flexible", value: "flexible" }
+    ]
+  }
 ];

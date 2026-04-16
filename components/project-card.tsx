@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowUpRight, MapPin, MessageCircle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -9,6 +10,7 @@ type ProjectCardProps = {
   features: string[];
   result: string;
   tone: "warm" | "cool" | "blush";
+  href?: string;
 };
 
 const previewThemes: Record<ProjectCardProps["tone"], string> = {
@@ -23,9 +25,10 @@ export function ProjectCard({
   description,
   features,
   result,
-  tone
+  tone,
+  href
 }: ProjectCardProps) {
-  return (
+  const card = (
     <article className="panel overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(11,95,165,0.14)] hover:shadow-[0_30px_68px_-42px_rgba(11,95,165,0.32)]">
       <div
         className={cn(
@@ -94,4 +97,14 @@ export function ProjectCard({
       </div>
     </article>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(11,95,165,0.45)] focus-visible:ring-offset-4 rounded-[28px]">
+        {card}
+      </Link>
+    );
+  }
+
+  return card;
 }

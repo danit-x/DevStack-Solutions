@@ -12,10 +12,11 @@ import {
 import { CallToActionBand } from "@/components/cta-band";
 import { FaqList } from "@/components/faq-list";
 import { JsonLd } from "@/components/json-ld";
+import { CaseStudyCard } from "@/components/case-study-card";
 import { PricingCard } from "@/components/pricing-card";
-import { ProjectCard } from "@/components/project-card";
 import { SectionHeading } from "@/components/section-heading";
 import { ServiceCard } from "@/components/service-card";
+import { SolutionFinder } from "@/components/solution-finder";
 import { TestimonialCard } from "@/components/testimonial-card";
 import { ButtonLink } from "@/components/ui/button-link";
 import { buildMetadata } from "@/lib/metadata";
@@ -31,9 +32,9 @@ import {
 } from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Websites for Sri Lankan small businesses",
+  title: "Websites for businesses",
   description:
-    "Modern websites, WhatsApp-first calls to action, and fast package delivery for Sri Lankan small businesses that want more leads.",
+    "Modern websites, WhatsApp-first calls to action, and fast package delivery for small businesses that want more leads.",
   path: "/"
 });
 
@@ -41,26 +42,134 @@ const serviceIcons = [Globe, Blocks, Smartphone, ShieldCheck];
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
+  "@type": ["ProfessionalService", "LocalBusiness"],
   name: siteConfig.name,
   url: siteConfig.url,
   description: siteConfig.description,
-  areaServed: "Sri Lanka",
+  areaServed: {
+    "@type": "Country",
+    name: "Sri Lanka"
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "LK",
+    addressRegion: "Western Province"
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 6.9271,
+    longitude: 79.8612
+  },
   telephone: siteConfig.whatsappDisplay,
   email: siteConfig.email,
-  sameAs: [whatsappHref]
+  priceRange: "LKR 30,000 – LKR 99,000",
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "09:00",
+      closes: "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Saturday"],
+      opens: "09:00",
+      closes: "13:00"
+    }
+  ],
+  sameAs: [whatsappHref],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Web Design & Development Packages",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        name: "Starter Website Package",
+        price: "30000",
+        priceCurrency: "LKR",
+        description: "Up to 5 sections, mobile-first design, WhatsApp CTA, Google Maps, basic SEO.",
+        eligibleRegion: { "@type": "Country", name: "Sri Lanka" }
+      },
+      {
+        "@type": "Offer",
+        name: "Standard Website Package",
+        price: "50000",
+        priceCurrency: "LKR",
+        description: "Everything in Starter plus lead capture form, testimonials, gallery, analytics.",
+        eligibleRegion: { "@type": "Country", name: "Sri Lanka" }
+      },
+      {
+        "@type": "Offer",
+        name: "Pro Website Package",
+        price: "99000",
+        priceCurrency: "LKR",
+        description: "Everything in Standard plus advanced animations, portfolio, custom integrations, launch support.",
+        eligibleRegion: { "@type": "Country", name: "Sri Lanka" }
+      }
+    ]
+  }
+};
+
+const softwareServicesSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Software Development",
+  name: "Web & Mobile Software Development — Sri Lanka",
+  provider: {
+    "@type": "Organization",
+    name: siteConfig.name,
+    url: siteConfig.url
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "Sri Lanka"
+  },
+  description:
+    "Custom website design, Next.js web app development, cross-platform mobile apps, and ongoing maintenance for Sri Lankan small and medium businesses.",
+  offers: [
+    {
+      "@type": "Offer",
+      name: "Website Design & Development",
+      description: "Mobile-first, SEO-ready business websites with WhatsApp and Google Maps integrations."
+    },
+    {
+      "@type": "Offer",
+      name: "Web Application Development",
+      description: "Custom portals, booking systems, dashboards, and workflow tools built with modern stacks."
+    },
+    {
+      "@type": "Offer",
+      name: "Mobile App Development",
+      description: "Cross-platform mobile experiences for customer-facing products."
+    },
+    {
+      "@type": "Offer",
+      name: "Website Maintenance & Support",
+      description: "Ongoing content updates, performance monitoring, and priority support."
+    }
+  ],
+  keywords: [
+    "web design Sri Lanka",
+    "website development Sri Lanka",
+    "small business website Colombo",
+    "WhatsApp website Sri Lanka",
+    "mobile app development Sri Lanka",
+    "Next.js developer Sri Lanka",
+    "affordable website Sri Lanka"
+  ]
 };
 
 export default function HomePage() {
   return (
     <>
       <JsonLd data={localBusinessSchema} />
+      <JsonLd data={softwareServicesSchema} />
 
       <section className="section-space pb-12">
         <div className="shell">
           <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div>
-              <span className="eyebrow">Built for Sri Lankan small businesses</span>
+              <span className="eyebrow">Built for small/large businesses</span>
               <h1 className="balanced-title mt-6 text-5xl font-bold text-slate-950 sm:text-6xl">
                 Modern websites that bring customers to your business
               </h1>
@@ -221,6 +330,20 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="section-space">
+        <div className="shell">
+          <SectionHeading
+            eyebrow="Solution Finder"
+            title="Not sure what you need?"
+            description="Answer 3 quick questions and we'll recommend the best package for your goals."
+            align="center"
+          />
+          <div className="mt-12">
+            <SolutionFinder />
+          </div>
+        </div>
+      </section>
+
       <section className="section-space bg-white/40">
         <div className="shell">
           <SectionHeading
@@ -237,17 +360,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section-space">
+      <section className="section-space bg-slate-50 border-y border-slate-200/50">
         <div className="shell">
           <SectionHeading
-            eyebrow="Portfolio"
-            title="Example layouts for the kinds of businesses that need quick wins online"
-            description="These sample directions show how DevStack Solutions can present menus, services, products, and direct action buttons without clutter."
+            eyebrow="Work"
+            title="Case Studies: From Clunky to High-Converting"
+            description="See how we've transformed ordinary online presences into mobile-first lead generators."
             align="center"
           />
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          <div className="mt-12 grid gap-6 lg:grid-cols-3 items-stretch">
             {portfolioItems.map((item) => (
-              <ProjectCard key={item.title} {...item} />
+              <CaseStudyCard key={item.title} {...item} />
             ))}
           </div>
         </div>

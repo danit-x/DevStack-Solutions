@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
+import { StickyContactBar } from "@/components/sticky-contact-bar";
 import { siteConfig } from "@/lib/site";
 
 import "./globals.css";
@@ -39,8 +40,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <body className="flex min-h-screen flex-col">
         <Navbar />
-        <main className="flex-1">{children}</main>
+        {/* Extra bottom padding on mobile so the sticky contact bar never covers content */}
+        <main className="flex-1 pb-[72px] md:pb-0">{children}</main>
         <Footer />
+        <StickyContactBar />
       </body>
     </html>
   );
